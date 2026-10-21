@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skillab — Belajar Praktik Lewat Simulasi</title>
+<meta name="description" content="Skillab: belajar keterampilan praktis lewat simulasi interaktif. Bisnis dan IT & Coding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ===================== VARIABEL ===================== */
+  :root {
+    --bg:          #f7f7fc;
+    --card:        #ffffff;
+
+    --text:        #1a1a2e;
+    --text-soft:   #4a4a6a;
+    --text-muted:  #8a8aa8;
+
+    --border:      #e8e8f0;
+    --border-hover:#d0d0e2;
+
+    --primary:     #6c5ce7;
+    --primary-2:   #a29bfe;
+    --primary-soft:#f0eeff;
+    --primary-dark:#4c3fd6;
+
+    --focus:       rgba(108, 92, 231, 0.20);
+
+    --c-bisnis:    #f59e0b;
+    --c-bisnis-bg: #fef3c7;
+    --c-it:        #3b82f6;
+    --c-it-bg:     #dbeafe;
+
+    --radius:    14px;
+    --radius-lg: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ===================== NAVBAR ===================== */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .brand__logo {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    box-shadow: 0 6px 14px -6px rgba(108, 92, 231, 0.6);
+  }
+  .brand__logo svg { width: 20px; height: 20px; }
+
+  .brand__name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+  }
+
+  .nav-links a {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .nav-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 11px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 0;
+    transition: transform 0.15s, box-shadow 0.2s, background-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-soft);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { background: #f3f3fa; border-color: var(--border-hover); }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    box-shadow: 0 10px 24px -10px rgba(108, 92, 231, 0.6);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px -10px rgba(108, 92, 231, 0.75);
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #fff;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--border);
+  }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 44px 24px 8px;
+  }
+
+  .hero__greet {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  .hero__title {
+    margin: 0;
+    font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    max-width: 720px;
+  }
+  .hero__title span {
+    background: linear-gradient(120deg, var(--primary), #ec4899);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+  }
+
+  .hero__sub {
+    margin: 12px 0 0;
+    font-size: 1rem;
+    color: var(--text-soft);
+    max-width: 560px;
+  }
+
+  /* ===================== SEARCH ===================== */
+  .search-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+
+  .search {
+    position: relative;
+    max-width: 640px;
+  }
+
+  .search__input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px -4px rgba(26, 26, 46, 0.06);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search__input::placeholder { color: #a8a8c0; }
+  .search__input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--focus);
+  }
+
+  .search__icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  .search__icon svg { width: 18px; height: 18px; }
+
+  /* ===================== SECTION ===================== */
+  .section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 44px 24px 0;
+  }
+
+  .section__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .section__title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .section__desc {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.55;
+  }
+
+  .section__link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+  .section__link:hover { color: var(--primary-dark); }
+
+  /* ===================== KATEGORI ===================== */
+  .kategori-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .kategori {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    min-height: 190px;
+  }
+
+  .kategori:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+    box-shadow: 0 16px 40px -16px rgba(26, 26, 46, 0.18);
+  }
+  .kategori:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .kategori__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .kategori__icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    flex-shrink: 0;
+  }
+  .kategori__icon svg { width: 24px; height: 24px; }
+
+  .kategori__arrow {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--text-muted);
+    transition: background-color 0.15s, color 0.15s, transform 0.15s;
+  }
+  .kategori__arrow svg { width: 15px; height: 15px; }
+  .kategori:hover .kategori__arrow {
+    background: var(--primary);
+    color: #fff;
+    transform: translateX(2px);
+  }
+
+  .kategori__name {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .kategori__desc {
+    margin: 0 0 16px;
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .kategori__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .chip {
+    padding: 4px 10px;
+    border-radius: 7px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--bg);
+    color: var(--text-soft);
+    border: 1px solid var(--border);
+  }
+
+  .k-bisnis .kategori__icon { background: var(--c-bisnis-bg); color: var(--c-bisnis); }
+  .k-bisnis .chip           { background: var(--c-bisnis-bg); color: #92400e; border-color: #fde68a; }
+  .k-it .kategori__icon     { background: var(--c-it-bg); color: var(--c-it); }
+  .k-it .chip               { background: var(--c-it-bg); color: #1e40af; border-color: #bfdbfe; }
+
+  /* Coming soon strip */
+  .coming-soon {
+    margin-top: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #fafafd;
+    border: 1.5px dashed var(--border-hover);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+  }
+
+  .coming-soon__label {
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-right: 2px;
+  }
+
+  .coming-soon__item {
+    padding: 3px 9px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ===================== ROADMAP ===================== */
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 18px;
+  }
+
+  .roadmap {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+  .roadmap:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 30px -14px rgba(26, 26, 46, 0.12);
+  }
+
+  .roadmap__top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .roadmap__cat {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .roadmap--bisnis .roadmap__cat { background: var(--c-bisnis-bg); color: #92400e; }
+  .roadmap--it     .roadmap__cat { background: var(--c-it-bg);     color: #1e40af; }
+
+  .roadmap__level {
+    margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .roadmap__level svg { width: 13px; height: 13px; }
+
+  .roadmap__title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+
+  .roadmap__desc {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  /* Progress */
+  .roadmap__progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress {
+    flex: 1;
+    height: 6px;
+    background: #ececf5;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress__bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-2));
+    border-radius: 99px;
+    transition: width 0.3s;
+  }
+
+  .progress__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Steps */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fafafd;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 4px;
+  }
+
+  .step__num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid var(--border-hover);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .step__title {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .step__time {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Outcome */
+  .roadmap__outcome {
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+    border: 1px solid #e8e4ff;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .roadmap__outcome strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  /* CTA */
+  .roadmap__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  .roadmap__total {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .roadmap__total svg { width: 14px; height: 14px; }
+
+  .roadmap__btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    border: 0;
+    box-shadow: 0 8px 20px -10px rgba(108, 92, 231, 0.7);
+    transition: transform 0.15s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .roadmap__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px -10px rgba(108, 92, 231, 0.85);
+  }
+  .roadmap__btn svg { width: 14px; height: 14px; }
+
+  /* ===================== CTA BANNER ===================== */
+  .cta-banner {
+    max-width: 1180px;
+    margin: 48px auto 0;
+    padding: 36px 32px;
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 60%, #ec4899 120%);
+    border-radius: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    box-shadow: 0 20px 50px -20px rgba(108, 92, 231, 0.6);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: "";
+    position: absolute;
+    width: 300px; height: 300px;
+    right: -80px; top: -120px;
+    background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .cta-banner__title {
+    margin: 0;
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.55rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    max-width: 500px;
+  }
+  .cta-banner__sub {
+    margin: 8px 0 0;
+    font-size: 0.92rem;
+    opacity: 0.9;
+    max-width: 480px;
+  }
+
+  .cta-banner .btn-primary {
+    background: #fff;
+    color: var(--primary-dark);
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.4);
+  }
+  .cta-banner .btn-primary:hover { background: #fafafa; }
+
+  /* ===================== FOOTER ===================== */
+  .footer {
+    max-width: 1180px;
+    margin: 48px auto 0;
+    padding: 28px 24px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: var(--text-soft);
+  }
+  .footer__brand .brand__logo { width: 28px; height: 28px; border-radius: 8px; }
+  .footer__brand .brand__logo svg { width: 15px; height: 15px; }
+  .footer__links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer__links a { color: var(--text-muted); transition: color 0.15s; }
+  .footer__links a:hover { color: var(--primary); }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 820px) {
+    .nav-links { display: none; }
+    .nav-actions .btn-ghost { display: none; }
+    .hero { padding-top: 32px; }
+    .section { padding-top: 36px; }
+    .cta-banner { padding: 28px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .kategori-grid { grid-template-columns: 1fr; }
+    .roadmap-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-inner { padding: 12px 16px; }
+    .hero, .search-wrap, .section { padding-left: 16px; padding-right: 16px; }
+    .brand__tag { display: none; }
+    .kategori { padding: 20px; min-height: auto; }
+    .roadmap { padding: 20px; }
+    .footer { padding-left: 16px; padding-right: 16px; }
+    .cta-banner { margin-left: 16px; margin-right: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand" aria-label="Skillab Beranda">
+        <div class="brand__logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6"/>
+            <path d="M10 3v6l-5 8a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-8V3"/>
+            <path d="M7.5 15h9"/>
+          </svg>
+        </div>
+        <span class="brand__name">Skillab</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#" class="active">Beranda</a>
+        <a href="#kategori">Kategori</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#komunitas">Komunitas</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="#" class="btn btn-ghost">Masuk</a>
+        <a href="#" class="btn btn-primary">Mulai Gratis</a>
+        <div class="avatar" title="Profil saya" tabindex="0" role="button" aria-label="Profil saya">A</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <p class="hero__greet">Selamat datang 👋</p>
+    <h1 class="hero__title">
+      Belajar lewat <span>simulasi langsung</span>,<br>
+      bukan cuma teori.
+    </h1>
+    <p class="hero__sub">
+      Pilih kategori, ikuti roadmap, praktik lewat simulasi interaktif.
+    </p>
+  </section>
+
+  <!-- ===================== SEARCH ===================== -->
+  <div class="search-wrap">
+    <div class="search">
+      <span class="search__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </span>
+      <input class="search__input" type="search"
+             placeholder="Cari topik: 'kembangkan warung kopi', 'belajar Python'…"
+             aria-label="Cari topik pembelajaran">
+    </div>
+  </div>
+
+  <!-- ===================== KATEGORI ===================== -->
+  <section class="section" id="kategori">
+    <div class="section__head">
+      <div>
+        <h2 class="section__title">Kategori</h2>
+        <p class="section__desc">
+          Jelajahi bidang yang tersedia. Setiap kategori punya sub-bidang dan simulasi praktis.
+        </p>
+      </div>
+    </div>
+
+    <div class="kategori-grid">
+
+      <!-- Bisnis -->
+      <a href="#bisnis" class="kategori k-bisnis">
+        <div class="kategori__top">
+          <div class="kategori__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18"/>
+              <path d="M5 21V7l7-4 7 4v14"/>
+              <path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/>
+            </svg>
+          </div>
+          <div class="kategori__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="kategori__name">Bisnis</h3>
+        <p class="kategori__desc">
+          Untuk pemilik usaha, calon founder, atau siapa pun yang mau tahu cara mengembangkan bisnis secara nyata.
+        </p>
+        <div class="kategori__chips">
+          <span class="chip">F&amp;B</span>
+          <span class="chip">Retail</span>
+          <span class="chip">Jasa</span>
+          <span class="chip">Literasi Keuangan</span>
+          <span class="chip">Operasional</span>
+          <span class="chip">Lean</span>
+        </div>
+      </a>
+
+      <!-- IT & Coding -->
+      <a href="#it" class="kategori k-it">
+        <div class="kategori__top">
+          <div class="kategori__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <div class="kategori__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="kategori__name">IT &amp; Coding</h3>
+        <p class="kategori__desc">
+          Untuk programmer pemula maupun yang mau naik level: dari dasar coding sampai penerapannya di proyek nyata.
+        </p>
+        <div class="kategori__chips">
+          <span class="chip">Web</span>
+          <span class="chip">Data</span>
+          <span class="chip">AI</span>
+          <span class="chip">Otomasi</span>
+          <span class="chip">Freelance</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="coming-soon">
+      <span class="coming-soon__label">Segera hadir:</span>
+      <span class="coming-soon__item">Desain</span>
+      <span class="coming-soon__item">Bahasa</span>
+      <span class="coming-soon__item">Kesehatan</span>
+      <span class="coming-soon__item">Kerajinan</span>
+      <span class="coming-soon__item">Pertanian</span>
+    </div>
+  </section>
+
+  <!-- ===================== ROADMAP ===================== -->
+  <section class="section" id="roadmap">
+    <div class="section__head">
+      <div>
+        <h2 class="section__title">Roadmap Belajar</h2>
+        <p class="section__desc">
+          Roadmap = kurikulum <strong>berurutan</strong> dari nol sampai bisa.
+          Setiap langkah membangun kemampuan langkah sebelumnya, dengan praktik langsung di tiap tahap.
+          Tidak tahu harus mulai dari mana? Pilih roadmap sesuai tujuanmu.
+        </p>
+      </div>
+      <a href="#" class="section__link">Semua roadmap →</a>
+    </div>
+
+    <div class="roadmap-grid">
+
+      <!-- Roadmap: Warung Kopi -->
+      <article class="roadmap roadmap--bisnis">
+        <div class="roadmap__top">
+          <span class="roadmap__cat">Bisnis · F&amp;B</span>
+          <span class="roadmap__level">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 17l6-6 4 4 8-8"/>
+              <path d="M17 7h4v4"/>
+            </svg>
+            Pemula → Mahir
+          </span>
+        </div>
+
+        <h3 class="roadmap__title">Kembangkan Warung Kopi Jadi Cabang</h3>
+        <p class="roadmap__desc">
+          Untuk pemilik warung kopi yang mau naik kelas: dari pembukuan rapi, operasional efisien, sampai siap buka cabang kedua.
+        </p>
+
+        <div class="roadmap__progress-wrap">
+          <div class="progress" aria-hidden="true">
+            <div class="progress__bar" style="width: 0%;"></div>
+          </div>
+          <span class="progress__label">Belum dimulai</span>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__num">1</span>
+            <span class="step__title">Literasi Keuangan &amp; HPP</span>
+            <span class="step__time">30 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">2</span>
+            <span class="step__title">Manajemen Operasional Harian</span>
+            <span class="step__time">60 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">3</span>
+            <span class="step__title">Prinsip Lean untuk F&amp;B</span>
+            <span class="step__time">45 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">4</span>
+            <span class="step__title">Strategi Buka Cabang</span>
+            <span class="step__time">45 mnt</span>
+          </li>
+        </ol>
+
+        <div class="roadmap__outcome">
+          <strong>Hasil:</strong> Bisa hitung HPP &amp; margin, atur shift staf, dan siap evaluasi kelayakan cabang baru.
+        </div>
+
+        <div class="roadmap__cta">
+          <span class="roadmap__total">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            ~3 jam total
+          </span>
+          <button class="roadmap__btn" type="button">
+            Mulai Roadmap
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- Roadmap: Programmer -->
+      <article class="roadmap roadmap--it">
+        <div class="roadmap__top">
+          <span class="roadmap__cat">IT &amp; Coding</span>
+          <span class="roadmap__level">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 17l6-6 4 4 8-8"/>
+              <path d="M17 7h4v4"/>
+            </svg>
+            Pemula → Mahir
+          </span>
+        </div>
+
+        <h3 class="roadmap__title">Jadi Programmer yang Bisa Kerja Nyata</h3>
+        <p class="roadmap__desc">
+          Untuk yang mau serius di coding: dari logika dasar sampai bikin proyek yang bisa dijual atau dipakai kerja.
+        </p>
+
+        <div class="roadmap__progress-wrap">
+          <div class="progress" aria-hidden="true">
+            <div class="progress__bar" style="width: 0%;"></div>
+          </div>
+          <span class="progress__label">Belum dimulai</span>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__num">1</span>
+            <span class="step__title">Logika Pemrograman Dasar</span>
+            <span class="step__time">60 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">2</span>
+            <span class="step__title">HTML, CSS &amp; JavaScript</span>
+            <span class="step__time">90 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">3</span>
+            <span class="step__title">Git &amp; Alur Kerja Proyek</span>
+            <span class="step__time">45 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">4</span>
+            <span class="step__title">Bangun Proyek Portofolio</span>
+            <span class="step__time">120 mnt</span>
+          </li>
+          <li class="step">
+            <span class="step__num">5</span>
+            <span class="step__title">Terapkan AI untuk Produktivitas</span>
+            <span class="step__time">45 mnt</span>
+          </li>
+        </ol>
+
+        <div class="roadmap__outcome">
+          <strong>Hasil:</strong> Punya 1 proyek portofolio nyata, paham alur kerja Git, dan bisa pakai AI untuk mempercepat kerja.
+        </div>
+
+        <div class="roadmap__cta">
+          <span class="roadmap__total">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            ~6 jam total
+          </span>
+          <button class="roadmap__btn" type="button">
+            Mulai Roadmap
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-banner">
+    <div>
+      <h2 class="cta-banner__title">Tidak tahu harus mulai dari mana?</h2>
+      <p class="cta-banner__sub">
+        Buat akun gratis, simpan progress belajarmu, dan akses semua simulasi tanpa batas.
+      </p>
+    </div>
+    <a href="#" class="btn btn-primary">Mulai Gratis</a>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer__brand">
+      <div class="brand__logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6"/>
+          <path d="M10 3v6l-5 8a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-8V3"/>
+          <path d="M7.5 15h9"/>
+        </svg>
+      </div>
+      <span>Skillab</span>
+    </div>
+    <div class="footer__links">
+      <a href="#">Tentang</a>
+      <a href="#">Kontak</a>
+      <a href="#">Kebijakan Privasi</a>
+      <a href="#">Syarat &amp; Ketentuan</a>
+    </div>
+  </footer>
+
+</body>
+</html>

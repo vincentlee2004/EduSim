@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk — EduSim</title>
+<meta name="description" content="Masuk ke EduSim, laboratorium edukasi virtual.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ===================== VARIABEL ===================== */
+  :root {
+    --card:        #ffffff;
+
+    --text:        #1a1a2e;
+    --text-soft:   #4a4a6a;
+    --text-muted:  #8a8aa8;
+
+    --border:      #e8e8f0;
+    --border-hover:#c8c8dc;
+
+    --primary:     #6c5ce7;
+    --primary-2:   #a29bfe;
+    --primary-soft:#f0eeff;
+
+    --focus:       rgba(108, 92, 231, 0.20);
+    --danger:      #e5484d;
+
+    --radius: 14px;
+  }
+
+  /* ===================== RESET ===================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    position: relative;
+    overflow-x: hidden;
+
+    /* ==== BACKGROUND MEJIKUHIBIJAU (soft pastel) ====
+       Layer gradien linear + 5 blob warna disusun
+       supaya tetap kalem, tidak norak. */
+    background:
+      linear-gradient(135deg,
+        #ffe8e0 0%,
+        #fff4d6 20%,
+        #e0f7e9 40%,
+        #d9eaff 60%,
+        #e6d9ff 80%,
+        #ffd9f0 100%);
+  }
+
+  /* Blob warna mejikuhibiniu — disebar di sudut & tengah */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      /* Merah — peach hangat (kiri atas) */
+      radial-gradient(circle 380px at 8% 12%,   rgba(255, 179, 168, 0.85), transparent 70%),
+      /* Jingga — oranye lembut (kanan atas) */
+      radial-gradient(circle 340px at 92% 6%,   rgba(255, 214, 165, 0.80), transparent 70%),
+      /* Kuning — kuning cerah (kiri bawah) */
+      radial-gradient(circle 360px at 4% 92%,   rgba(255, 240, 168, 0.85), transparent 70%),
+      /* Hijau — mint segar (kanan bawah) */
+      radial-gradient(circle 400px at 96% 94%,  rgba(168, 236, 196, 0.85), transparent 70%),
+      /* Biru — langit lembut (tengah bawah) */
+      radial-gradient(circle 380px at 55% 105%, rgba(168, 208, 255, 0.85), transparent 70%),
+      /* Nila — biru-ungu (tengah atas) */
+      radial-gradient(circle 320px at 45% -5%,  rgba(190, 180, 255, 0.80), transparent 70%),
+      /* Ungu — lavender (kanan tengah) */
+      radial-gradient(circle 340px at 100% 50%, rgba(220, 180, 255, 0.80), transparent 70%);
+    filter: blur(20px) saturate(115%);
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-12px, 8px) scale(1.03); }
+    100% { transform: translate(10px, -10px) scale(1.02); }
+  }
+
+  /* ===================== CARD ===================== */
+  .card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 430px);
+    background: var(--card);
+    border-radius: 22px;
+    box-shadow:
+      0 1px 3px rgba(26, 26, 46, 0.06),
+      0 24px 60px -20px rgba(108, 92, 231, 0.30),
+      0 8px 30px -10px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    animation: rise 0.5s ease both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== HEADER LOGO ===================== */
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: #fff;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    box-shadow: 0 8px 18px -6px rgba(108, 92, 231, 0.55);
+  }
+  .logo svg { width: 22px; height: 22px; }
+
+  .brand__name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .brand__tag {
+    margin: 1px 0 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* ===================== BODY ===================== */
+  .body { padding: 30px 28px 26px; }
+
+  .title {
+    margin: 0;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .subtitle {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* ===================== FORM ===================== */
+  .form {
+    margin-top: 26px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .field__label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+
+  .control { position: relative; }
+
+  .input {
+    width: 100%;
+    padding: 13px 15px;
+    font: inherit;
+    font-size: 0.93rem;
+    color: var(--text);
+    background: #fafafd;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+  }
+  .input::placeholder { color: #a8a8c0; }
+  .input:hover  { border-color: var(--border-hover); }
+  .input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--focus);
+  }
+
+  .input[type="password"],
+  .input[type="text"]#password { padding-right: 48px; }
+
+  /* Tombol mata */
+  .toggle-pw {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .toggle-pw:hover { background: var(--primary-soft); color: var(--primary); }
+  .toggle-pw:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .toggle-pw svg { width: 18px; height: 18px; }
+  .toggle-pw .eye-off { display: none; }
+  .toggle-pw[aria-pressed="true"] .eye { display: none; }
+  .toggle-pw[aria-pressed="true"] .eye-off { display: block; }
+
+  /* Pesan galat */
+  .field__error {
+    display: none;
+    margin: 6px 2px 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--danger);
+  }
+  .field.invalid .input {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.12);
+  }
+  .field.invalid .field__error { display: block; }
+
+  /* ===================== BUTTON ===================== */
+  .btn {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    border: 0;
+    border-radius: var(--radius);
+    cursor: pointer;
+    box-shadow: 0 14px 30px -12px rgba(108, 92, 231, 0.65);
+    transition: transform 0.15s, box-shadow 0.2s, opacity 0.15s;
+  }
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px -14px rgba(108, 92, 231, 0.75);
+  }
+  .btn:active:not(:disabled) { transform: translateY(0); }
+  .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+  .btn:disabled { cursor: progress; opacity: 0.85; }
+
+  .spinner {
+    display: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  .btn.loading .spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===================== LINK DAFTAR ===================== */
+  .register {
+    margin: 20px 0 0;
+    text-align: center;
+    font-size: 0.87rem;
+    color: var(--text-muted);
+  }
+  .register a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .register a:hover { color: #4c3fd6; text-decoration: underline; }
+  .register a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
+
+  /* ===================== FOOTER ===================== */
+  .foot {
+    padding: 14px 28px 16px;
+    background: #fafafd;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .foot strong { color: var(--text-soft); font-weight: 700; }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 420px) {
+    .head { padding: 18px 20px; }
+    .body { padding: 24px 20px 22px; }
+    .foot { padding: 12px 20px 14px; }
+    .title { font-size: 1.25rem; }
+    body::before { filter: blur(14px) saturate(110%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <main class="card">
+
+    <!-- Header / Logo -->
+    <header class="head">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6"/>
+          <path d="M10 3v6l-5 8a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-8V3"/>
+          <path d="M7.5 15h9"/>
+        </svg>
+      </div>
+      <div>
+        <p class="brand__name">EduSim</p>
+        <p class="brand__tag">Laboratorium Edukasi Virtual</p>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <section class="body">
+      <h1 class="title">Selamat datang kembali 👋</h1>
+      <p class="subtitle">Masuk untuk melanjutkan eksperimenmu</p>
+
+      <form class="form" id="loginForm" novalidate>
+
+        <div class="field" id="fUser">
+          <label class="field__label" for="user">Email atau nama pengguna</label>
+          <div class="control">
+            <input class="input" type="text" id="user" name="user"
+                   placeholder="nama@email.com" autocomplete="username"
+                   spellcheck="false" required>
+          </div>
+          <p class="field__error">Email atau nama pengguna wajib diisi.</p>
+        </div>
+
+        <div class="field" id="fPass">
+          <label class="field__label" for="password">Kata sandi</label>
+          <div class="control">
+            <input class="input" type="password" id="password" name="password"
+                   placeholder="Minimal 6 karakter" autocomplete="current-password" required>
+            <button class="toggle-pw" type="button" id="togglePw"
+                    aria-label="Tampilkan kata sandi" aria-pressed="false" aria-controls="password">
+              <svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+          <p class="field__error">Kata sandi minimal 6 karakter.</p>
+        </div>
+
+        <button class="btn" type="submit" id="submitBtn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="label">Masuk</span>
+        </button>
+      </form>
+
+      <p class="register">
+        Belum punya akun? <a href="#daftar">Daftar gratis</a>
+      </p>
+    </section>
+
+    <footer class="foot">
+      © 2026 <strong>EduSim</strong> · Belajar apapun lewat simulasi
+    </footer>
+
+  </main>
+
+<script>
+  (function () {
+    "use strict";
+
+    const form    = document.getElementById("loginForm");
+    const pwInput = document.getElementById("password");
+    const toggle  = document.getElementById("togglePw");
+    const btn     = document.getElementById("submitBtn");
+    const label   = btn.querySelector(".label");
+
+    toggle.addEventListener("click", function () {
+      const show = pwInput.type === "password";
+      pwInput.type = show ? "text" : "password";
+      toggle.setAttribute("aria-pressed", String(show));
+      toggle.setAttribute("aria-label", show ? "Sembunyikan kata sandi" : "Tampilkan kata sandi");
+      pwInput.focus({ preventScroll: true });
+    });
+
+    function validate(input) {
+      const field = input.closest(".field");
+      const val   = input.value.trim();
+      let ok = val.length > 0;
+      if (ok && input.id === "password" && val.length < 6) ok = false;
+      field.classList.toggle("invalid", !ok);
+      input.setAttribute("aria-invalid", String(!ok));
+      return ok;
+    }
+
+    form.querySelectorAll(".input").forEach(function (input) {
+      input.addEventListener("input", function () {
+        if (input.closest(".field").classList.contains("invalid")) validate(input);
+      });
+      input.addEventListener("blur", function () {
+        if (input.value.trim() !== "") validate(input);
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const inputs = Array.from(form.querySelectorAll(".input"));
+      const allValid = inputs.map(validate).every(Boolean);
+
+      if (!allValid) {
+        const first = form.querySelector(".field.invalid .input");
+        if (first) first.focus();
+        return;
+      }
+
+      btn.classList.add("loading");
+      btn.disabled = true;
+      label.textContent = "Memproses…";
+
+      setTimeout(function () {
+        btn.classList.remove("loading");
+        btn.disabled = false;
+        label.textContent = "Masuk";
+        console.log("Login:", document.getElementById("user").value.trim());
+      }, 1500);
+    });
+  })();
+</script>
+</body>
+</html>
